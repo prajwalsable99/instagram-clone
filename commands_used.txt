@@ -1,0 +1,9 @@
+1 npm install react-router-dom@6
+ Id CommandLine
+  -- -----------
+   1 npm install date-fns
+   2 npm install react-loading-skeleton
+   3 npm install firebase
+   4 hitory
+   5 history
+   6 npm start
