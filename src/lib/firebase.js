@@ -23,4 +23,4 @@ const { fieldvalue } = Firebase.firestore;
 console.log("firebase",firebase);
 
 
-export { firebase, fieldvalue };
+export {firebase, fieldvalue };
