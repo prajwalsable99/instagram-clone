@@ -6,7 +6,7 @@ import FirebaseContext from '../context/firebase'
 import * as ROUTES from '../constants/routes'
 
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import {firebase} from '../lib/firebase';
+
 export default function Login() {
 
 
@@ -30,7 +30,7 @@ export default function Login() {
   const handlelogin = async(e) => {
     e.preventDefault()
     console.log("submitted")
-    const auth = getAuth(firebase);
+    const auth = getAuth();
     signInWithEmailAndPassword(auth, creds.email, creds.password)
       .then((userCredential) => {
         // Signed in 

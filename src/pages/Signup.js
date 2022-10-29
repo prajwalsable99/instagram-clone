@@ -4,12 +4,17 @@ import logo from '../images/logo.png'
 import { useNavigate } from 'react-router-dom';
 import FirebaseContext from '../context/firebase'
 import * as ROUTES from '../constants/routes'
-
+import { getFirestore } from "firebase/firestore";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { doesUsernameExist, doesEmailExist } from '../services/firebase_services';
 
-import { firebase } from '../lib/firebase';
+import { collection, addDoc } from "firebase/firestore";
 
-import {doesUsernameExist }from '../services/firebase_services';
+
+
+
+
+
 
 export default function Signup() {
 
@@ -26,7 +31,7 @@ export default function Signup() {
 
     const [error, setError] = useState('');
 
-    // const { FirebaseCont } = useContext(FirebaseContext);
+    const { FirebaseCont } = useContext(FirebaseContext);
 
     const isInvaid = creds.password === '' || creds.email === '' || creds.fullname === '' || creds.username === '';
 
@@ -35,25 +40,64 @@ export default function Signup() {
         e.preventDefault()
         console.log("signup")
 
-      console.log(  await doesUsernameExist(creds.username));
-        // const auth = getAuth(firebase);
-        // createUserWithEmailAndPassword(auth, creds.email, creds.password)
-            
-        // .then((userCredential) => {
+        const usernameExists = await doesUsernameExist(creds.username);
+        if (!usernameExists) {
+            try {
+                const doesEmailExists = await doesEmailExist(creds.email);
+
+                if (!doesEmailExists) {
+                    const auth = getAuth();
+                    createUserWithEmailAndPassword(auth, creds.email, creds.password)
+                        .then((userCredential) => {
+                            // Signed in 
+                            const user = userCredential.user;
+                            console.log(user);
+
+                            user.displayName = creds.username;
+
+                            const db = getFirestore(FirebaseCont);
+                            addDoc(collection(db, "users"), {
+                                userId: user.uid,
+                                username: creds.username.toLowerCase(),
+                                fullname: creds.fullname,
+                                emailAddress: creds.email.toLowerCase(),
+                                following: ['2'],
+                                followers: [],
+                                dateCreated: Date.now()
+
+                            });
+                            history(ROUTES.DASHBOARD);
+                            // ...
+                        })
+
+                } else {
+                    setError('That useremail is already taken, please try another.');
+                    alert(error)
+
+                }
 
 
-        //         console.log(userCredential.user);
-        //         history(ROUTES.DASHBOARD)
-        //         // ...
-        //     })
-        //     .catch((err) => {
-        //         setError(err.message);
-        //         console.log(error)
-        //         alert(error)
-        //     });
 
 
+
+
+
+            } catch (error) {
+                setCreds({ email: "", password: "", username: "", fullname: "" })
+                setError(error.message);
+                alert(error);
+
+            }
+        }
+        else {
+
+            setError('That username is already taken, please try another.');
+            alert(error)
+        }
     }
+
+
+
 
 
 
@@ -120,3 +164,5 @@ export default function Signup() {
         </div>
     )
 }
+
+
