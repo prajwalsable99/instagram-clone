@@ -19,6 +19,7 @@ function App() {
     <BrowserRouter>
 
       <Routes>
+      <Route exact path="/" element={<Login></Login>}></Route>
 
         <Route exact path={ROUTES.DASHBOARD} element={<Dashboard></Dashboard>}></Route>
 

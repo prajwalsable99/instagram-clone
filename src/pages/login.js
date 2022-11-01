@@ -41,6 +41,7 @@ export default function Login() {
       .catch((error) => {
         setCreds({ email: "", password: "" });
         setError(error.message);
+        alert(error.message);
       });
    
   }
@@ -87,7 +88,7 @@ export default function Login() {
         <p className='mt-3'> Don't have an account ? <Link to='/signup'> Create one </Link></p>
       </form >
 
-      {error}&&<p>{error.message}</p>
+      {/* {error}&&<p>{error.message}</p> */}
 
 
 

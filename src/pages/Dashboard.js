@@ -2,28 +2,49 @@ import React from 'react'
 import Sidebar from '../components/Sidebar'
 import Timeline from '../components/Timeline'
 import Header from '../components/Header'
-function Dashboard() {
-  return (
-    <div>
-     <div class="container text-center">
-  <div class="row">
-    <div class="col">
-      
-    </div>
-    <div class="col-6">
-      2 of 3 (wider)
-    </div>
-    <div class="col">
-      3 of 3
-    </div>
-  </div>
+import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import { useContext } from 'react'
+import UserContext from '../context/user'
+import firebaseContext from '../context/firebase'
+import *  as ROUTES from '../constants/routes'
 
-</div>
-      {/* <Header></Header>
-      <Timeline></Timeline>
-      <Sidebar></Sidebar> */}
-    </div>
-  )
+function Dashboard() {
+
+    const history = useNavigate();
+
+    const { firebase } = useContext(firebaseContext);
+    const { user } = useContext(UserContext);
+
+
+    return (
+        
+        <div>
+            { user?
+            <div className="row my-3">
+                <div className="col-2 colbod">
+                    <Header></Header>
+                </div>
+                <div className="col colbod">
+                    2 of 3 (wider)
+                </div>
+                <div className="col-4 colbod">
+                    3 of 3
+                </div>
+            </div>
+
+            :
+
+            <div>
+                You need to login to continue ,<Link to={ROUTES.LOGIN}> click here</Link>
+            </div>
+            }
+
+        </div>
+
+       
+
+    )
 }
 
 export default Dashboard
