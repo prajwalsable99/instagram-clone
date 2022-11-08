@@ -10,7 +10,7 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 export default function Login() {
 
 
-
+ 
 
 
 
@@ -36,7 +36,10 @@ export default function Login() {
         // Signed in 
         const user = userCredential.user;
           console.log(user);
+          ;
           history(ROUTES.DASHBOARD)
+
+
       })
       .catch((error) => {
         setCreds({ email: "", password: "" });

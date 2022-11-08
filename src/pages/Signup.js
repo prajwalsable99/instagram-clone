@@ -11,15 +11,14 @@ import { doesUsernameExist, doesEmailExist } from '../services/firebase_services
 import { collection, addDoc } from "firebase/firestore";
 
 
-
+import { updateProfile} from "firebase/auth";
 
 
 
 
 export default function Signup() {
 
-
-
+    
 
 
 
@@ -46,14 +45,19 @@ export default function Signup() {
                 const doesEmailExists = await doesEmailExist(creds.email);
 
                 if (!doesEmailExists) {
-                    const auth = getAuth();
+                    let auth = getAuth();
                     createUserWithEmailAndPassword(auth, creds.email, creds.password)
                         .then((userCredential) => {
                             // Signed in 
                             const user = userCredential.user;
                             console.log(user);
+                            updateProfile(
+                                user,{
+                                displayName: creds.username,photoURL:null
+                                
+                            });
 
-                            user.displayName = creds.username;
+                            // console.log("print :",user);
 
                             const db = getFirestore(FirebaseCont);
                             addDoc(collection(db, "users"), {
@@ -67,8 +71,15 @@ export default function Signup() {
 
                             });
                             history(ROUTES.DASHBOARD);
+                            
                             // ...
                         })
+                           
+                       
+                      
+                        
+
+
 
                 } else {
                     setError('That useremail is already taken, please try another.');

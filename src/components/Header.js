@@ -1,12 +1,13 @@
 import React from 'react'
-import { useContext } from 'react'
+import { useContext,useEffect} from 'react'
 import firebaseContext from '../context/firebase'
 import UserContext from '../context/user'
 import { Link } from 'react-router-dom'
 import instaimg from '../images/logo.png'
 import *  as ROUTES from '../constants/routes'
-import profile_pic from '../images/avatars/default.png'
+
 import { getAuth, signOut } from "firebase/auth";
+
 
 
 import { useNavigate } from 'react-router-dom';
@@ -18,6 +19,9 @@ function Header() {
 
     const { firebase } = useContext(firebaseContext);
     const { user } = useContext(UserContext);
+    const username = user.displayName;
+    
+
     return (
         <div className='container ' style={{ background: "#ffecec" }}>
             <ul className="nav flex-column">
@@ -83,16 +87,19 @@ function Header() {
 
                     </Link>
                 </li>
-
+                <button onClick={()=>{ console.log(user.displayName)}}></button>
                 <li className="nav-item">
                     <Link className="nav-link" to="/">
-                        <img src={profile_pic} className="rounded-circle w-25" alt="profile pic" />
-                    </Link>
+                       
+                        <img src={`/images/avatars/${username}.jpg`} className="rounded-circle w-25" alt="profile pic" />
+                        </Link>
                 </li>
 
 
                 <li className="nav-item">
                     <button onClick={() => {
+
+                        
                         console.log("signout"); const auth = getAuth();
                         signOut(auth).then(() => {
                             console.log("Sign-out successful");
