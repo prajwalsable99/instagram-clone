@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { Link } from 'react-router-dom';
-import logo from '../images/logo.png'
+import logo from '../logo.png'
 import { useNavigate } from 'react-router-dom';
 import FirebaseContext from '../context/firebase'
 import * as ROUTES from '../constants/routes'

@@ -10,3 +10,8 @@ body{
 .colbod{
   border: 1px solid black;
 }
+
+.lic {
+  color: black;
+  padding: 5px
+}

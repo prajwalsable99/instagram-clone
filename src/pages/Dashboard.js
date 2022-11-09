@@ -2,6 +2,7 @@ import React from 'react'
 import Sidebar from '../components/Sidebar'
 import Timeline from '../components/Timeline'
 import Header from '../components/Header'
+
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import { useContext } from 'react'
@@ -29,7 +30,7 @@ function Dashboard() {
                     2 of 3 (wider)
                 </div>
                 <div className="col-4 colbod">
-                    3 of 3
+                    <Sidebar></Sidebar>
                 </div>
             </div>
 
